@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="utf-8"/>
+    <title>История поломок и ремонтов</title>
+    <link rel="icon" href="img/fav-icon.png" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre&display=swap" rel="stylesheet"><!-- ссылка на шрифт -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/417822ee3c.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" th:src="@{/js/common.js}"></script>
+    <link media="all" rel="stylesheet" type="text/css" th:href="@{/css/style_repair-history.css}"> <!-- ссылка на css всегда должна быть самой последней -->
+</head>
+<body>
+<div class="container-fluid">
+    
+        <form th:action="@{/logout}" method="post" th:hidden="true" name="logoutForm">
+            <input type="submit"/>
+        </form>
+        <div class="header">  
+            <div class="firstHead">
+                <a class="col-sm" th:href="@{/bikes}"><i class="fa-sharp fa-solid fa-house fa-2x"></i></a>
+            </div><div class="midleHead textCenter">
+                <a th:href="@{/history/clean}" class="btn btn-danger" role="button" aria-pressed="true">Очистить историю</a>
+            </div><div class="lastHead">
+                    <div class="col order-2 justify-content-start">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a sec:authentication="principal.username">
+                            </a>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" th:href="@{/account}">Мой аккаунт</a>
+                            <a sec:authorize="hasRole('ADMIN')" class="dropdown-item" th:href="@{/users}">Пользователи</a>
+                            <a sec:authorize="hasRole('ADMIN')" class="dropdown-item" th:href="@{/part-names}">Запчасти</a>
+                            <a class="dropdown-item" id="logoutLink" th:href="@{/logout}">Выйти</a>
+                        </div>
+                    </div>
+                </div>
+        </div>  
+    
+</div>
+<br>
+<div>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Пользователь</th>
+            <th>№ вело</th>
+            <th>QR вело</th>
+            <th class="none">VIN вело</th>
+            <th>Тип действия</th>
+            <th>Дата</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="trTab" th:each="row : ${history}">
+            <td th:text="${row.id}"/>
+            <td th:text="${row.username}"/>
+            <td th:text="${row.number}"/>
+            <td th:text="${row.qrNumber}"/>
+            <td th:text="${row.VIN}" class="none"/>
+            <td th:text="${row.type}"/>
+            <td th:text="${#temporals.format(row.datePoint, 'HH:mm dd.MM.yy ')}"/>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<nav class="center" th:if="${totalPages > 1}">
+    <ul class="pagination justify-content-center">
+        <li th:class="${currentPage > 1 ? 'page-item': 'page-item disabled'}">
+            <a th:replace="fragments :: pageLink('history', 1, 'В начало')"/>
+        </li>
+        <li th:class="${currentPage > 1 ? 'page-item': 'page-item disabled'}" >
+            <a th:replace="fragments :: pageLink('history', ${currentPage - 1}, '☚ Туда')"/>
+        </li>
+        <!--Если страниц меньше 6-->
+        <th:block th:if="${totalPages < 6}">
+            <li th:class="${currentPage != i ? 'page-item' : 'page-item active'}"
+                th:each="i: ${#numbers.sequence(1, totalPages)}">
+                <a th:replace="fragments :: pageLink('history', ${i}, ${i})"/>
+            </li>
+        </th:block>
+        <!--Если страниц больше 5-->
+        <th:block th:if="${totalPages >= 6}">
+            <th:block th:if="${currentPage == 1}">
+                <li th:class="${currentPage != i ? 'page-item' : 'page-item active'}"
+                    th:each="i: ${#numbers.sequence(1, currentPage + 2)}">
+                    <a th:replace="fragments :: pageLink('history', ${i}, ${i})"/>
+                </li>
+                <li class="page-item disabled" >
+                    <a th:replace="fragments :: pageLink('history', 0, '..')"/>
+                </li>
+            </th:block>
+            <th:block th:if="${currentPage == 2}">
+                <li class="page-item" >
+                    <a th:replace="fragments :: pageLink('history', 1, '1')"/>
+                </li>
+                <li th:class="${currentPage != i ? 'page-item' : 'page-item active'}"
+                    th:each="i: ${#numbers.sequence(2, currentPage + 2)}">
+                    <a th:replace="fragments :: pageLink('history', ${i}, ${i})"/>
+                </li>
+                <li class="page-item disabled" >
+                    <a th:replace="fragments :: pageLink('history', 0, '..')"/>
+                </li>
+            </th:block>
+            <th:block th:if="${currentPage == totalPages}">
+                <li class="page-item disabled" >
+                    <a th:replace="fragments :: pageLink('history', 0, '..')"/>
+                </li>
+                <li th:class="${currentPage != i ? 'page-item' : 'page-item active'}"
+                    th:each="i: ${#numbers.sequence(currentPage - 2, totalPages)}">
+                    <a th:replace="fragments :: pageLink('history', ${i}, ${i})"/>
+                </li>
+            </th:block>
+            <th:block th:if="${currentPage == totalPages - 1}">
+                <li class="page-item disabled" >
+                    <a th:replace="fragments :: pageLink('history', 0, '..')"/>
+                </li>
+                <li th:class="${currentPage != i ? 'page-item' : 'page-item active'}"
+                    th:each="i: ${#numbers.sequence(currentPage - 2, currentPage)}">
+                    <a th:replace="fragments :: pageLink('history', ${i}, ${i})"/>
+                </li>
+                <li class="page-item" >
+                    <a th:replace="fragments :: pageLink('history', ${totalPages}, ${totalPages})"/>
+                </li>
+            </th:block>
+            <th:block th:if="${currentPage > 2 && currentPage < totalPages - 1}">
+                <li th:if="${currentPage > 3}" class="page-item disabled" >
+                    <a th:replace="fragments :: pageLink('history', 0, '..')"/>
+                </li>
+                <li th:class="${currentPage != i ? 'page-item' : 'page-item active'}"
+                    th:each="i: ${#numbers.sequence(currentPage - 2, currentPage)}">
+                    <a th:replace="fragments :: pageLink('history', ${i}, ${i})"/>
+                </li>
+                <li th:class="${currentPage != i ? 'page-item' : 'page-item active'}"
+                    th:each="i: ${#numbers.sequence(currentPage + 1, currentPage + 2)}">
+                    <a th:replace="fragments :: pageLink('history', ${i}, ${i})"/>
+                </li>
+                <li th:if="${currentPage + 2 < totalPages}" class="page-item disabled" >
+                    <a th:replace="fragments :: pageLink('history', 0, '..')"/>
+                </li>
+            </th:block>
+        </th:block>
+        <li th:class="${currentPage < totalPages ? 'page-item': 'page-item disabled'}">
+            <a th:replace="fragments :: pageLink('history', ${currentPage + 1}, 'Сюда ☛')"/>
+        </li>
+        <li th:class="${currentPage < totalPages ? 'page-item': 'page-item disabled'}">
+            <a th:replace="fragments :: pageLink('history', ${totalPages}, 'В конец')"/>
+        </li>
+    </ul>
+</nav>
+</body>
+</html>

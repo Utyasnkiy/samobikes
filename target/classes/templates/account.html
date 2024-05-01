@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+  <meta charset="utf-8"/>
+  <title>Мой аккаунт</title>
+  <link rel="icon" href="img/fav-icon.png" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre&display=swap" rel="stylesheet"><!-- ссылка на шрифт -->
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://kit.fontawesome.com/417822ee3c.js" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  <script type="text/javascript" th:src="@{/js/common.js}"></script>
+  <link media="all" rel="stylesheet" type="text/css" th:href="@{/css/style_account.css}">
+</head>
+
+<body>
+<div>
+  <a th:href="@{/bikes}">[На главную]</a>
+</div>
+<h1  th:text="${'Мой аккаунт'}"/></h1>
+<!--Сообщение об успешном добавлении/изменении/удалении-->
+<div class="alert" th:if="${message != null}">
+  [[${message}]]
+</div>
+<div class="container">
+  <form th:action="@{/account/save}"
+        th:object="${user}" method="post" class="form-vertical">
+    <input type="hidden" th:field="*{id}"/>
+    <input type="hidden" th:field="*{username}"/>
+    <div  class="input-group inp login">
+      <span>Логин: </span>
+      <br>
+      <span th:text="*{username}"></span>
+    </div>
+    <div  class="input-group inp">
+      <span>Пароль</span>
+      <br>
+      <div><!--только латиница вместе с цифрами от 8 до 100 символов-->
+        <input class="password" type="password" th:field="*{password}" minlength="8" maxlength="100"
+               placeholder="Ничего не вводите, если не хотите изменить"
+               oninput="checkPasswordMatch(document.getElementById('confirmPassword'))"
+               pattern="^(?=.*\d)(?=.*[a-zA-Z])(?!.*\s).*$"/>
+      </div>
+    </div><!--только латиница вместе с цифрами от 8 до 100 символов-->
+    <div  class="input-group inp">
+      <span>Повторите новый пароль</span>
+      <br>
+      <div>
+        <input class="password" type="password" id="confirmPassword" minlength="8" maxlength="100"
+               oninput="checkPasswordMatch(this)" pattern="^(?=.*\d)(?=.*[a-zA-Z])(?!.*\s).*$"/>
+      </div>
+    </div>
+    <div class="input-group inp">
+      <span>Имя</span>
+      <br>
+      <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+      <input th:field="*{firstName}" placeholder="Имя (необязательно)" class="form-control form" maxlength="100"/>
+    </div>
+    <div class="input-group inp">
+      <span>Фамилия</span>
+      <br>
+      <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+      <input th:field="*{lastName}" placeholder="Фамилия (необязательно)" class="form-control form" maxlength="100"/>
+    </div>
+    <div  class="input-group inp login">
+      <span>Мои роли:</span>
+      <br>
+      <span>[[${user.rolesToString}]]</span>
+    </div>
+
+    <div class="form-group button">
+      <div>
+        <button type="submit" class="btn">Сохранить</button>
+        <a class="home" th:href="@{'/bikes'}" th:text="Отмена"/>
+      </div>
+    </div>
+  </form>
+  <script type="text/javascript">
+    function checkPasswordMatch(confirmPassword) {
+      if (confirmPassword.value != $("#password").val()) {
+        confirmPassword.setCustomValidity("Пароли не совпадают");
+      } else {
+        confirmPassword.setCustomValidity("");
+      }
+    }
+  </script>
+</div>
+</body>
+</html>

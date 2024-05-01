@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+  <meta charset="UTF-8">
+  <title>Редактор запчастей</title>
+  <link rel="icon" href="img/fav-icon.png" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre&display=swap" rel="stylesheet"><!-- ссылка на шрифт -->
+ <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  <script type="text/javascript" th:src="@{/js/common.js}"></script>
+  <link media="all" rel="stylesheet" type="text/css" th:href="@{/css/style_part-edit.css}"><!-- ссылка на css всегда должна быть самой последней -->
+</head>
+<body>
+<div>
+  <form th:action="@{/logout}" method="post" th:hidden="true" name="logoutForm">
+    <input type="submit"/>
+  </form>
+  <div>
+    <span class="fas fa-light fa-user fa-2x"></span>
+  </div>
+  <div class="dropdown">
+    <a class="link dropdown-toggle" data-toggle="dropdown"
+       sec:authentication="principal.username"></a>
+    <div>
+      <a th:href="@{/account}">Мой аккаунт</a>
+    </div>
+    <div>
+      <a sec:authorize="hasAuthority('ADMIN')" th:href="@{/users}">Пользователи</a>
+    </div>
+    <div>
+      <a id="logoutLink" th:href="@{/logout}">Выйти</a>
+    </div>
+  </div>
+</div>
+
+<h1 th:text="${'Изменение состояния запчастей велосипеда ' + bike.number + ' / ' + bike.qrNumber}"/>
+<div class="homeBut">
+  <a class="home" th:href="@{'/bikes'}" th:text="'На главную'"/>
+</div>
+<div class="container">
+  <!--Форма редактирования запчастей-->
+  <form th:action="@{/parts/edit}"
+        th:object="${partList}" method="post" class="form-vertical">
+    <input type="hidden" th:field="*{params}" class="form-control" hidden/>
+    <input type="hidden" th:field="*{bikeId}" class="form-control" hidden/>
+    <div class="partsLeft" th:if="${partList.partsLeft.size != 0}">
+      <th:block  th:each="part, iter : ${partList.partsLeft}">
+        <div class="input-group">
+          <input type="hidden" th:field="*{partsLeft[__${iter.index}__].id}" class="form-control" hidden/>
+          <input type="hidden" th:field="*{partsLeft[__${iter.index}__].bike}" class="form-control" hidden/>
+          <input type="hidden" th:field="*{partsLeft[__${iter.index}__].name}" class="form-control" hidden/>
+          <input type="hidden" th:field="*{partsLeft[__${iter.index}__].description}" class="form-control" hidden/>
+          <input type="hidden" th:field="*{partsLeft[__${iter.index}__].importance}" class="form-control" hidden/>
+          <span class="input-group-addon"><i class="glyphicon glyphicon-user" th:text="${part.name} + ' - '"></i></span>
+          <select th:field="*{partsLeft[__${iter.index}__].status}" required>
+            <option value="true">Работает</option>
+            <option value="false">Сломан</option>
+          </select>
+          <hr>
+        </div>
+      </th:block>
+    </div>
+    <div class="partsRight" th:if="${partList.partsRight.size != 0}">
+      <th:block  th:each="part, iter : ${partList.partsRight}">
+        <div class="input-group">
+          <input type="hidden" th:field="*{partsRight[__${iter.index}__].id}" class="form-control" hidden/>
+          <input type="hidden" th:field="*{partsRight[__${iter.index}__].bike}" class="form-control" hidden/>
+          <input type="hidden" th:field="*{partsRight[__${iter.index}__].name}" class="form-control" hidden/>
+          <input type="hidden" th:field="*{partsRight[__${iter.index}__].description}" class="form-control" hidden/>
+          <input type="hidden" th:field="*{partsRight[__${iter.index}__].importance}" class="form-control" hidden/>
+          <span class="input-group-addon"><i class="glyphicon glyphicon-user" th:text="${part.name} + ' - '"></i></span>
+          <select th:field="*{partsRight[__${iter.index}__].status}" required>
+            <option value="true">Работает</option>
+            <option value="false">Сломан</option>
+          </select>
+          <hr>
+        </div>
+      </th:block>
+    </div>
+    <div class="emptiDiv">Ебать какой же тут костыль)</div>
+    <div  class="form-group">
+      <div class="button">
+        <button class="save">Сохранить</button>
+        <a class="home" th:href="@{'/bikes/show/' + ${bike.id} + '?currentPage=' + ${currentPage} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + '&commentSortField=commentedAt&commentSortDir=asc' + ${keyword != null ? '&keyword=' + keyword : ''}}" th:text="'Назад'"/>
+      </div>
+    </div>
+  </form>
+</div>
+</body>
+</html>

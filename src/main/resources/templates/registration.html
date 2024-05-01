@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    <link rel="icon" href="img/fav-icon.png" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre&display=swap" rel="stylesheet"><!-- ссылка на шрифт -->
+  <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+  <link media="all" rel="stylesheet" type="text/css" th:href="@{/css/style_registration.css}"><!-- ссылка на css всегда должна быть самой последней -->
+</head>
+<body>
+<h1  th:text="Регистрация"/></h1>
+<div class="message" th:if="${message != null}">
+    [[${message}]]
+</div>
+<div class="formReg">
+<form th:action="@{/register-user}" th:object="${user}" method="POST" enctype="utf8" onsubmit="return checkUsername(this)">
+    <div class="formDiv">
+        <label>Придумайте логин</label><br> <!--только латиница и цифры без пробелов от 2 до 20 символов-->
+        <input class="form-control" th:field="*{username}" required minlength="2" maxlength="20"
+        pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$" placeholder="латиница и цифры от 2 до 20 символов"/>
+    </div>
+    <div class="formDiv">
+        <label>Имя</label><br>
+        <input class="form-control" th:field="*{firstName}" maxlength="100" placeholder="необязательно, но заполни, а то чё ты..."/>
+    </div>
+    <div class="formDiv">
+        <label>Фамилия</label><br>
+        <input class="form-control" th:field="*{lastName}" maxlength="100" placeholder="необязательно, но заполни, а то чё ты..."/>
+    </div>
+    <div class="formDiv">
+        <label>Пароль</label><br> <!--только латиница вместе с цифрами от 8 до 100 символов-->
+        <input class="form-control" type="password" th:field="*{password}" required minlength="8" maxlength="100"
+               oninput="checkPasswordMatch(document.getElementById('confirmPassword'))"
+               pattern="^(?=.*\d)(?=.*[a-zA-Z])(?!.*\s).*$" placeholder="латиница и цифры от 8 до 100 символов"/>
+    </div>
+    <div class="formDiv">
+        <label>Подтвердите пароль</label><br> <!--только латиница вместе с цифрами от 8 до 100 символов-->
+        <input class="form-control" type="password" id="confirmPassword" required minlength="8" maxlength="100"
+               oninput="checkPasswordMatch(this)" placeholder="латиница и цифры от 8 до 100 символов"
+               pattern="^(?=.*\d)(?=.*[a-zA-Z])(?!.*\s).*$"/>
+    </div>
+    <div class="formDiv g-recaptcha"
+         th:attr="data-sitekey=${@captchaSettings.getSite()}"></div>
+    <button class="button" type="submit" th:text="Представиться">submit</button>
+</form>
+</div>
+<div>    <!--отделить рамкой от основного блока-->
+    <a class="reg formDiv" th:href="@{'/login'}" th:text="${'У меня уже есть логин и пароль'}"/>
+</div>
+<script type="text/javascript">
+    function checkPasswordMatch(confirmPassword) {
+      if (confirmPassword.value != $("#password").val()) {
+        confirmPassword.setCustomValidity("Пароли не совпадают");
+      } else {
+        confirmPassword.setCustomValidity("");
+      }
+    }
+</script>
+<script type="text/javascript">
+    function checkUsername(form){
+        url = "[[@{/check_username}]]";
+        username = $("#username").val();
+        csrfValue = $("input[name='_csrf']").val();
+        params = {username: username, _csrf: csrfValue};
+        $.post(url, params, function(response){
+            if(response == "OK"){
+                form.submit();
+            } else if(response == "Duplicated"){
+                alert("Есть другой пользователь с логином " + username);
+            } else {
+                alert("Произошло что-то непонятное...");
+            }
+        }).fail(function(){
+            alert("Невозможно подключиться к серверу.");
+        });
+        return false;
+    }
+</script>
+</body>
+</html>

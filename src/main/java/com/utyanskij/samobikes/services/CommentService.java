@@ -1,0 +1,46 @@
+package com.utyanskij.samobikes.services;
+
+import com.utyanskij.samobikes.repositories.CommentRepository;
+import com.utyanskij.samobikes.entities.Comment;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.Collection;
+
+@Service
+public class CommentService {
+
+    CommentRepository commentRepository;
+
+    @Autowired
+    public void setCommentRepository(CommentRepository commentRepository) {
+        this.commentRepository = commentRepository;
+    }
+
+    public Collection<Comment> findAll(){
+        return commentRepository.findAll();
+    }
+
+    public Collection<Comment> findByBikeId(Integer bikeId, String sortField, String sortDir){
+        if ("asc".equals(sortDir)) return commentRepository.findByBikeIdOrderByCommentedAtAsc(bikeId);
+        else return commentRepository.findByBikeIdOrderByCommentedAtDesc(bikeId);
+    }
+
+    public void save(Comment comment){
+        commentRepository.save(comment);
+    }
+
+    public void insert(Integer userId,Integer bikeId,String commentText,LocalDateTime commentedAt){
+        commentRepository.insert(userId, bikeId, commentText, commentedAt);
+    }
+
+    public void deleteById(Integer id){
+        commentRepository.deleteById(id);
+    }
+
+    public Comment getById(Integer id){
+        return commentRepository.findById(id).get();
+    }
+}
+

@@ -1,0 +1,158 @@
+/*пока пишу все через имена тегов, если что потом добавлю классы или ид*/
+@import url("style.css");
+.content{
+	margin: auto;
+}
+h1{
+	padding: 2%;
+	padding-bottom: 2%;
+}
+
+thead{
+	color: rgb(254,12,106);
+}
+td{
+	text-align: center;
+	border-bottom: 2px solid rgb(254,12,106);
+	border-right: 2px solid rgba(254,12,106,0.3);
+	padding-top: 12px;
+	padding-bottom: 12px;
+}
+.trTab:hover{
+	background: rgb(254,12,106);
+	color: white;
+}
+a{
+	color: rgb(254,12,106);
+	text-decoration: none;
+}
+a:hover{
+	color: rgb(254,12,106);
+	text-decoration: none;
+}
+table{
+	width: 100%;
+}
+
+th{
+	text-align: center;
+	border-top: 2px solid rgb(254,12,106);
+	border-bottom: 2px solid rgb(254,12,106);
+	border-right: 2px solid rgba(254,12,106,0.3);
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+.textCenter{
+	border-right: none;
+}
+.aTab{
+	border: 2px solid rgb(254,12,106);
+	background: white;
+	appearance: none;
+	border-radius: 5px;
+	background: white;
+	padding: 10px;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+.aTab:hover{
+
+	border: 2px solid white;
+	box-shadow: 0 0 0 0.2rem rgba(225, 225, 225, 0.6);
+}
+
+button{
+	font-family: 'Averia Serif Libre', cursive;
+	appearance: none;
+	border: 0;
+	border-radius: 5px;
+	padding: 8px 16px;
+	font-size: 16px;
+	border: 2px solid rgb(254,12,106);
+	background: white;
+	margin-top: 1%;
+	margin-bottom: 1%;
+}
+button:hover{
+	border: 2px solid white;
+	box-shadow: 0 0 0 0.2rem rgba(225, 225, 225, 0.6);
+}
+button:focus{
+	border: 2px solid white;
+	box-shadow: 0 0 0 0.2rem rgba(225, 225, 225, 0.6);
+
+}
+.btn, .btn-secondary{
+	color: white;
+	background: rgb(254,12,106);
+	border: 2px solid rgb(254,12,106);
+}
+
+.aAdd{
+	padding: 10px;
+	padding-left: 15px;
+	padding-right: 15px;
+	border-radius: 5px;
+	background: rgb(254,12,106);
+	border: 2px solid rgb(254,12,106);
+	color: white;
+}
+.aAdd:hover{
+	color: white;
+	border: 2px solid rgb(254,12,106);
+	box-shadow: 0 0 0 0.2rem rgba(254, 51, 96, 0.4);
+}
+.divBtn{
+	text-align: center;
+}
+.alert{
+	border: 2px solid rgb(254,12,106);
+	border-radius: 5px;
+	text-align: center;
+	font-size: 20px;
+	width: 30%;
+	color: rgb(254,12,106);
+	margin-left: auto;
+	margin-right: auto;
+}	
+i{
+	color: rgb(254,12,106);
+}
+
+.inputSearch{
+	color: white;
+	background: rgb(254,12,106);
+	border-radius: 5px;
+	border: 2px solid rgb(254,12,106);
+	margin-left: 1%;
+	padding: 0.5%;
+}
+.inputSearch:hover{
+	border: 2px solid rgb(254,12,106);
+	box-shadow: 0 0 0 0.2rem rgba(254, 51, 96, 0.4);
+}
+.search{
+	font-size: 20px;
+	border: 2px solid grey;
+	border-radius: 5px;
+	color: grey;
+}
+.search:focus{
+	color: rgb(254,51,96);
+	background-color: #fff;
+	border-color: rgb(254,51,96);
+	outline: 0;
+	box-shadow: 0 0 0 0.2rem rgba(254, 51, 96, 0.4);
+}
+
+.fas{
+	color: grey;
+}
+.dropdown-toggle{
+	margin-bottom: 22px;
+}
+@media (min-width:200px) and (max-width:768px){
+	.aTab{
+		padding: 4px;
+	}
+}

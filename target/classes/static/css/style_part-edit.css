@@ -1,0 +1,109 @@
+@import url("style.css");
+select{
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+    background-position:center;
+    font-family: 'Averia Serif Libre', cursive;
+}
+h1{
+    margin-top: 1%;
+}
+a{
+    color: white;
+    text-decoration: none;
+}
+a:hover{
+    color: white;
+    text-decoration: none;
+}
+.button{
+    text-align: center;
+}
+button{
+    font-family: 'Averia Serif Libre', cursive;
+    appearance: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    border: 2px solid rgb(254,12,106);
+    background: white;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    background: rgb(254,12,106);
+    color: white;
+    width: 300px;
+}
+button:hover{
+    box-shadow: 0 0 0 0.2rem rgba(254, 51, 96, 0.4);
+}
+hr{
+    color: rgb(254,12,106);
+    background-color: rgb(254,12,106);
+    border: 2px solid rgb(254,12,106);
+}
+input-group{
+    margin-top: 2%;
+}
+.homeBut{
+    text-align: center;
+    margin: 3%;
+}
+.home{
+    border: 2px solid rgb(254,12,106);
+    background: rgb(254,12,106);
+    color: white;
+    padding: 9px 128px 9px 128px;
+    border-radius: 5px;
+
+}
+.home:hover{
+    background: rgb(254,12,106);
+    box-shadow: 0 0 0 0.2rem rgba(254, 12, 106, 0.4);
+    border-color: rgb(254,12,106);
+}
+.save, .home{
+    display: inline-block;
+}
+.partsLeft{
+    width: 47%;
+    float: left;
+    border-radius: 5px;
+    border: 2px solid rgb(254,12,106);
+    padding: 1%;
+}
+.partsRight{
+    width: 47%;
+    float: right;
+    border-radius: 5px;
+    border: 2px solid rgb(254,12,106);
+    padding: 1%;
+}
+.emptiDiv{
+    padding-bottom: 20px;
+    color: rgba(0, 0, 0, 0.0);
+}
+@media only screen and (max-device-width: 600px){
+    .partsLeft{
+        width: 98%;
+        float: none;
+    }
+    .partsRight{
+        width: 98%;
+        float: none;
+    }
+    .emptiDiv{
+        display: none;
+    }
+}
+@media all and (max-width:900px){
+    .partsLeft{
+        width: 98%;
+        float: none;
+    }
+    .partsRight{
+        width: 98%;
+        float: none;
+    }
+    .emptiDiv{
+        display: none;
+    }
+}

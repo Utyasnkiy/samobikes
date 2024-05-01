@@ -1,0 +1,55 @@
+@import url("style.css");
+.aAdd{
+    padding: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 5px;
+    background: rgb(254,12,106);
+    border: 2px solid rgb(254,12,106);
+    color: white;
+}
+.aAdd:hover{
+    color: white;
+    border: 2px solid rgb(254,12,106);
+    box-shadow: 0 0 0 0.2rem rgba(254, 51, 96, 0.4);
+}
+h2{
+    background: white;
+    width: 70%;
+    margin: auto;
+    color: rgb(254,12,106);
+    border: 2px solid rgb(254,12,106);
+    border-radius: 5px;
+    text-align: center;
+    margin-top: 10%;
+}
+a{
+    color: rgb(254,12,106);
+    text-decoration: none;
+}
+a:hover{
+    color: rgb(254,12,106);
+    text-decoration: none;
+}
+.mem404, .mem403, .mem500{
+
+    margin: auto;
+    border: 2px solid rgb(254,12,106);
+    border-radius: 5px;
+    text-align: center;
+    width: 600px;
+    height: 500px;
+    
+}
+.mem403{
+    margin-top: 50px;
+    background-image: url(../img/kto_takie.png);
+}
+.mem404{
+    margin-top: 50px;
+    background-image: url(../img/travolt.png);
+}
+.mem500{
+    margin-top: 50px;
+    background-image: url(../img/tech_chok.png);
+}
