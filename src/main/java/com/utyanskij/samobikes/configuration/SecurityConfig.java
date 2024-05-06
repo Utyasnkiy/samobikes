@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http.authorizeRequests()
-                // Определяем права доступа к различным URL
+                // Определяем права доступа к различным URl
                 .antMatchers("/users/**").hasAnyRole("ADMIN")
                 .antMatchers("/part-names/**").hasRole("ADMIN")
                 .antMatchers("/comment/delete/**").hasRole("ADMIN")
