@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+
+//Этот сервис позволяет Spring Security загружать данные пользователя из базы данных для аутентификации и авторизации.
 public class SamUserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
     private UserRepository userRepository;
 

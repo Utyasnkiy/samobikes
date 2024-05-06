@@ -13,6 +13,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
 
+
+//это класс сервиса, который предоставляет методы для управления данными о велосипедах.
+// Он содержит логику для выполнения операций с объектами Bike, таких как получение всех велосипедов, постраничный вывод,
+// подсчет числа велосипедов, сохранение, удаление и проверка уникальности номера, QR-кода и VIN.
 @Service
 public class BikeService {
     public static final int BIKES_PER_PAGE = 20;
@@ -30,10 +34,13 @@ public class BikeService {
         this.partService = partService;
     }
 
+    //получает все велосипеды из репозитория.
     public Iterable<Bike> getAllBikes(){
         return bikeRepository.findAll();
     }
 
+
+    //получает страницу велосипедов с заданным номером страницы, сортировкой и ключевым словом.
     public Page<Bike> getAllByPage(int pageNum, String sortField, String sortDir, String keyword){
         Sort sort = Sort.by(sortField, "number");
         if ("asc".equals(sortDir)){
@@ -49,23 +56,31 @@ public class BikeService {
         return bikeRepository.findAll(pageable);
     }
 
+
+    //подсчитывает общее количество велосипедов.
     public int countAll(){
         return (int)bikeRepository.count();
     }
 
+
+    //подсчитывает количество рабочих велосипедов.
     public int countWorkingBikes(){
         return bikeRepository.countByStatus(true);
     }
 
-
+    //подсчитывает количество сломанных велосипедов.
     public int countBrokenBikes(){
         return bikeRepository.countByStatus(false);
     }
 
+
+    //получает велосипед по его идентификатору.
     public Bike getById(Integer id){
         return bikeRepository.findById(id).get();
     }
 
+
+    //сохраняет велосипед в репозитории, также создает детали (части) велосипеда при необходимости.
     public void save(Bike bike){
         bikeRepository.save(bike);
         List<Part> parts = bike.getParts();
@@ -75,10 +90,13 @@ public class BikeService {
         }
     }
 
+    // удаляет велосипед по его идентификатору.
     public void deleteById(Integer id){
         bikeRepository.deleteById(id);
     }
 
+
+    //проверяет уникальность номера велосипеда.
     public boolean isNumberUnique(Integer id, Integer number) {
         Bike bike = bikeRepository.findByNumber(number);
         if (bike == null) return true;
@@ -86,6 +104,8 @@ public class BikeService {
         return checkUniqueness(id, bike);
     }
 
+
+    // проверяет уникальность QR-кода велосипеда.
     public boolean isQRNumberUnique(Integer id, Integer qrNumber) {
         Bike bike = bikeRepository.findByqrNumber(qrNumber);
         if (bike == null) return true;
@@ -93,6 +113,8 @@ public class BikeService {
         return checkUniqueness(id, bike);
     }
 
+
+    //проверяет уникальность VIN велосипеда.
     public boolean isVINUnique(Integer id, String VIN) {
         Bike bike = bikeRepository.findByVIN(VIN);
         if (bike == null) return true;

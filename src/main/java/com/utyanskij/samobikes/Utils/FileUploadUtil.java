@@ -9,9 +9,16 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
+
+//предоставляет утилитарные методы для загрузки, удаления и очистки файлов в приложении.
 public class FileUploadUtil {
+
+    //сохраняет файл, полученный в виде объекта
     public static  void saveFile(String uploadDir, String fileName, MultipartFile multipartFile) throws IOException {
         Path uploadPath = Paths.get(uploadDir);
+
+        // в указанной директории. Если директория не существует, она будет создана.
+        // Этот метод обрабатывает возможные исключения, связанные с сохранением файла.
         if (System.getProperty("os.name").contains("Linux")){
             uploadPath = Paths.get(System.getProperty("user.home"), "/samobikes_app/samobikes/", uploadDir);
         }
@@ -28,6 +35,7 @@ public class FileUploadUtil {
         }
     }
 
+    // удаляет все файлы в указанной директории.
     public static void cleanDir(String dir){
         Path dirPath = Paths.get(dir);
         if (System.getProperty("os.name").contains("Linux")){
@@ -49,6 +57,8 @@ public class FileUploadUtil {
         }
     }
 
+
+    //удаляет указанный файл из директории.
     public static void deleteFile(String dir, String fileName){
         Path dirPath = Paths.get(dir, fileName);
         if (System.getProperty("os.name").contains("Linux")){

@@ -9,6 +9,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+
+//это класс сервиса, предназначенный для управления историей технического обслуживания велосипедов.
+// Этот сервис содержит методы для получения истории обслуживания постранично, сохранения новых записей и очистки истории.
 @Service
 public class HistoryService {
     public static final int ROWS_PER_PAGE = 10;
@@ -20,6 +23,9 @@ public class HistoryService {
         this.historyRepository = historyRepository;
     }
 
+
+    //getAllByPage: получает историю технического обслуживания постранично.
+    // История сортируется по дате точки (дате обслуживания) в убывающем порядке.
     public Page<History> getAllByPage(int pageNum){
         Sort sort = Sort.by("datePoint");
         sort = sort.descending();
@@ -28,10 +34,13 @@ public class HistoryService {
         return historyRepository.findAll(pageable);
     }
 
+    //сохраняет новую запись о техническом обслуживании в репозитории.
     public void save(History history){
         historyRepository.save(history);
     }
 
+
+    // очищает всю историю технического обслуживания, удаляя все записи из репозитория.
     public void clean(){
         historyRepository.deleteAll();
     }

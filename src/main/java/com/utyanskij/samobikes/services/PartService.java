@@ -10,6 +10,11 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+
+//сервисный класс, предназначенный для управления сущностями "Деталь".
+// Он обеспечивает методы для выполнения операций с деталями,
+// таких как сохранение детали, получение детали по идентификатору,
+// создание деталей для конкретного велосипеда и удаление детали по имени.
 @Service
 public class PartService {
     private PartRepository partRepository;

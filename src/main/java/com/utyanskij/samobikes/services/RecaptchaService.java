@@ -12,6 +12,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+
+//RecaptchaService представляет сервис для проверки reCAPTCHA, используя сервис Google reCAPTCHA API.
+// Он содержит метод verifyRecaptcha, который отправляет запрос на проверку reCAPTCHA на указанный URL
+// и анализирует ответ для подтверждения или отклонения успешности проверки.
 @Service
 public class RecaptchaService {
     private static final String GOOGLE_RECAPTCHA_VERIFY_URL =
@@ -31,6 +35,9 @@ public class RecaptchaService {
         this.restTemplateBuilder = restTemplateBuilder;
     }
 
+    //отправляет запрос на Google reCAPTCHA API для проверки reCAPTCHA.
+    // Возвращает строку с сообщением об ошибке,
+    // если проверка не удалась, или пустую строку, если проверка прошла успешно.
     public String verifyRecaptcha(String ip,
                                   String recaptchaResponse){
         Map<String, String> body = new HashMap<>();
