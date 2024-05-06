@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+//конфигурация безопасности в Spring Security
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -47,6 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http.authorizeRequests()
+                // Определяем права доступа к различным URL
                 .antMatchers("/users/**").hasAnyRole("ADMIN")
                 .antMatchers("/part-names/**").hasRole("ADMIN")
                 .antMatchers("/comment/delete/**").hasRole("ADMIN")
@@ -60,24 +62,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/check_username").permitAll()
                 .antMatchers("/check_bike_info").permitAll()
                 .antMatchers("/logout").permitAll()
+                // Настраиваем форму входа
                 .and()
                 .formLogin()
                     .loginPage("/login")
                     .permitAll()
+                // Настраиваем выход из системы
                 .and()
                 .logout()
                     .logoutSuccessUrl("/login").permitAll()
+                // Настраиваем "запомнить меня"
                 .and()
                 .rememberMe().alwaysRemember(true);
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception{
+        // Настраиваем провайдера аутентификации
         auth.authenticationProvider(authenticationProvider());
     }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
+        // Настроим игнорирование некоторых URL для Spring Security
         web.ignoring().antMatchers("/css/**", "/img/**", "/js/**", "/photos/**");
     }
 
