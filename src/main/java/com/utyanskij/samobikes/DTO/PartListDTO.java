@@ -5,6 +5,8 @@ import com.utyanskij.samobikes.entities.Part;
 import java.util.List;
 import java.util.stream.Stream;
 
+
+//это класс передачи данных (DTO), который используется для передачи списка деталей (частей) в представление.
 public class PartListDTO {
     private List<Part> partsLeft;
 
