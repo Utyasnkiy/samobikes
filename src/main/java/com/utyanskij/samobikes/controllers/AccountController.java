@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
+//Этот код представляет контроллер Spring MVC для управления пользовательскими учетными записями.
 @Controller
 public class AccountController {
     private UserServiceImpl userService;

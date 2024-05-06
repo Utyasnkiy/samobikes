@@ -26,6 +26,11 @@ import java.util.Map;
 
 import static com.utyanskij.samobikes.Utils.StringUtil.makeHistoryType;
 
+
+//Этот класс - контроллер для управления пользователями в приложении.
+// В нем определены различные методы для обработки HTTP-запросов, связанных с пользователями,
+// такие как отображение списка пользователей, добавление, редактирование,
+// удаление пользователей, управление их активностью и регистрация новых пользователей.
 @Controller
 public class UserController {
     private UserServiceImpl userService;
@@ -54,6 +59,7 @@ public class UserController {
         return showUsersByPage(model, 1, "username", "asc", null);
     }
 
+    //Отображает список пользователей с пагинацией и возможностью сортировки и фильтрации.
     @GetMapping("/users/page/{pageNum}")
     public String showUsersByPage(Model model,
                                   @PathVariable(name = "pageNum") int pageNum,
@@ -84,6 +90,8 @@ public class UserController {
         return "users";
     }
 
+
+    //Отображает форму для добавления нового пользователя.
     @GetMapping("/users/add")
     public String showAddUserForm(Model model){
         User user = new User();
@@ -95,6 +103,8 @@ public class UserController {
         return "user-edit";
     }
 
+
+    //Отображает форму для редактирования существующего пользователя.
     @GetMapping("/users/edit/{id}")
     public String editUser(Model model, @PathVariable(value = "id") Integer id){
         User user = userService.getById(id);
@@ -106,6 +116,7 @@ public class UserController {
     }
 
 
+    //Сохраняет изменения в профиле пользователя или добавляет нового пользователя.
     @PostMapping("/users/save")
     public String saveUser(@ModelAttribute(value = "user") User user,
                            @AuthenticationPrincipal SamUserDetails loggedUser,
@@ -127,6 +138,8 @@ public class UserController {
         return "redirect:/users";
     }
 
+
+    //Удаляет пользователя по заданному идентификатору.
     @GetMapping("/users/delete/{id}")
     public String deleteUser(@PathVariable(value = "id") Integer id,
                              @AuthenticationPrincipal SamUserDetails loggedUser,
@@ -148,6 +161,8 @@ public class UserController {
         return "redirect:/users";
     }
 
+
+    //Регистрирует нового пользователя на основе данных, введенных в форму регистрации.
     @PostMapping("/register-user")
     public String registerUserAccount(Model model,
                                       @ModelAttribute(value = "user") UserDTO userDTO,
@@ -180,6 +195,8 @@ public class UserController {
         return "redirect:/login";
     }
 
+
+    //Устанавливает активность пользователя по заданному идентификатору.
     @GetMapping("/users/{id}/enabled/{status}")
     public String setEnabledById (Model model,
                                   @AuthenticationPrincipal SamUserDetails loggedUser,

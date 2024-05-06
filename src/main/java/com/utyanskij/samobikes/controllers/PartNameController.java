@@ -15,6 +15,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.IOException;
 import java.util.List;
 
+
+//Этот класс PartNameController управляет операциями, связанными с наименованиями деталей велосипеда.
 @Controller
 public class PartNameController {
     PartNameService partNameService;
@@ -31,6 +33,8 @@ public class PartNameController {
         this.partService = partService;
     }
 
+    //Этот метод извлекает все наименования деталей из базы данных и добавляет их в модель. Затем он возвращает имя представления "part-names",
+    // которое, вероятно, отображает таблицу всех наименований деталей.
     @GetMapping("/part-names")
     public String showPartNamesTable(Model model){
         List<PartName> partNames = partNameService.getAll();
@@ -39,6 +43,9 @@ public class PartNameController {
         return "part-names";
     }
 
+
+    //showAddBikeForm: Этот метод подготавливает новый объект PartName и добавляет его в модель. Затем он возвращает имя представления "part-names-edit",
+    // которое, вероятно, содержит форму для добавления нового наименования детали.
     @GetMapping("/part-names/add")
     public String showAddBikeForm(Model model){
         PartName partName = new PartName();
@@ -46,6 +53,9 @@ public class PartNameController {
         return "part-names-edit";
     }
 
+
+    //showAddBikeForm: Этот метод подготавливает новый объект PartName и добавляет его в модель. Затем он возвращает имя представления "part-names-edit",
+    // которое, вероятно, содержит форму для добавления нового наименования детали.
     @PostMapping("/part-names/edit")
     public String savePartName (@ModelAttribute(value = "partName") PartName partName,
                             RedirectAttributes redirectAttributes,
@@ -74,6 +84,9 @@ public class PartNameController {
         return "redirect:/part-names";
     }
 
+
+    //Этот метод обрабатывает удаление наименования детали. Сначала он извлекает наименование детали по его идентификатору, удаляет его связанный файл изображения из каталога, удаляет наименование детали из базы данных и добавляет сообщение во флэш-атрибут.
+    //Наконец, он перенаправляет пользователя на конечную точку "/part-names".
     @GetMapping("/part-names/delete/{id}")
     public String deletePartName(@PathVariable(value = "id") Integer id,
                              RedirectAttributes redirectAttributes){

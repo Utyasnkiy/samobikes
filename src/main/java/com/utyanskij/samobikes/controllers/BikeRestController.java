@@ -6,6 +6,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
+//Этот код представляет собой REST-контроллер,
+// который обрабатывает POST-запросы для проверки информации о велосипеде.
 @RestController
 public class BikeRestController {
     private BikeService bikeService;

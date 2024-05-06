@@ -25,9 +25,13 @@ import java.util.*;
 
 import static com.utyanskij.samobikes.Utils.StringUtil.makeHistoryType;
 
+//Этот контроллер управляет операциями, связанными с велосипедами в приложении.
+
 @Controller
 @RequestMapping("/bikes")
 public class BikeController {
+    //Эти поля обеспечивают доступ к сервисам, которые предоставляют бизнес-логику для велосипедов,
+    // комментариев, пользователей и истории.
     private BikeService bikeService;
     private CommentService commentService;
 
@@ -35,6 +39,7 @@ public class BikeController {
 
     private HistoryService historyService;
 
+    //обрабатывают GET и POST запросы для отображения, добавления, редактирования и удаления велосипедов.
     @Autowired
     public void setBikeService(BikeService bikeService) {
         this.bikeService = bikeService;
@@ -60,6 +65,9 @@ public class BikeController {
         return showBikesByPage(model, 1, "number", "asc", null);
     }
 
+    //Этот метод предназначен для отображения
+    // списка велосипедов на определенной странице с учетом параметров
+    // сортировки и ключевого слова для поиска.
     @GetMapping("/page/{pageNum}")
     public String showBikesByPage(Model model,
                                   @PathVariable(name = "pageNum") int pageNum,
@@ -97,6 +105,9 @@ public class BikeController {
         return "bikes";
     }
 
+
+    //Этот метод предназначен для отображения информации
+    // о конкретном велосипеде и связанных с ним деталей, таких как комментарии и состояние деталей.
     @GetMapping("/show/{id}")
     public String showOneBike(Model model, @PathVariable(value = "id") Integer id,
                               @Param("currentPage") String currentPage,
@@ -146,6 +157,8 @@ public class BikeController {
         return "bike-edit";
     }
 
+
+    // Логика сохранения велосипеда и обработки изображения
     @PostMapping("/management/edit")
     public String saveBike (Model model,
                             @AuthenticationPrincipal SamUserDetails loggedUser,
@@ -195,6 +208,8 @@ public class BikeController {
         return "redirect:/bikes";
     }
 
+
+    // Логика удаления велосипеда
     @GetMapping("/management/delete/{id}")
     public String deleteBike(@PathVariable(value = "id") Integer id,
                              @AuthenticationPrincipal SamUserDetails loggedUser,
@@ -218,6 +233,8 @@ public class BikeController {
         return "redirect:/bikes";
     }
 
+
+    // Метод для проверки наличия дубликатов по номеру, QR-коду и VIN-коду велосипеда
     private void checkDuplicate(Bike bike, List<String> errors) {
         if (!bikeService.isNumberUnique(bike.getId(), bike.getNumber()))
             errors.add("Такой номер уже существует");
@@ -227,6 +244,8 @@ public class BikeController {
             errors.add("Такой VIN уже существует");
     }
 
+
+    //Метод для разделения списка деталей на две подсписки, которые будут отображаться на странице интерфейса.
     private List<Part> makeSubList(boolean left, List<Part> parts){
         int temp = 0;
 

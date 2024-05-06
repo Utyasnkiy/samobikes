@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+
+//Этот код представляет собой контроллер комментариев,
+// который обрабатывает операции сохранения и удаления комментариев.
 @Controller
 public class CommentController {
     CommentService commentService;
@@ -40,6 +43,9 @@ public class CommentController {
         this.userService = userService;
     }
 
+    //Метод создает новый комментарий, сохраняет его в базе данных,
+    // обновляет список комментариев
+    // для соответствующего велосипеда и перенаправляет пользователя на страницу велосипеда.
     @PostMapping("/comment/save/{id}")
     public String saveComment (Model model, @PathVariable(value = "id") Integer id,
                                @AuthenticationPrincipal SamUserDetails loggedUser,
@@ -84,6 +90,9 @@ public class CommentController {
         return StringUtil.createBikePageRedirectLink(bike.getId(), currentPage, sortField, sortDir, commentSortDir, keyword);
     }
 
+
+    //Метод deleteComment удаляет комментарий из базы данных, обновляет список комментариев
+    // для соответствующего велосипеда и перенаправляет пользователя на страницу велосипеда.
     @GetMapping("/comment/delete/{id}")
     public String deleteComment(Model model, @PathVariable(value = "id") Integer id,
                              @Param(value = "currentPage") String currentPage,

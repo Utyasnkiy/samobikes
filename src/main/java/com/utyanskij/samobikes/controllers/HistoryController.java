@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+//отвечает за обработку запросов, связанных с историей ремонта.
 @Controller
 public class HistoryController {
     private HistoryService historyService;
@@ -38,11 +39,14 @@ public class HistoryController {
         this.bikeService = bikeService;
     }
 
+
+    //Метод showHistory отображает историю ремонта на первой странице.
     @GetMapping("/history")
     public String showHistory(Model model){
         return showHistoryByPage(model, 1);
     }
 
+    //Метод showHistoryByPage отображает историю ремонта на указанной странице.
     @GetMapping("/history/page/{pageNum}")
     public String showHistoryByPage(Model model,
                                   @PathVariable(name = "pageNum") int pageNum){
@@ -65,6 +69,9 @@ public class HistoryController {
         return "redirect:/history";
     }
 
+
+    //Метод prepareHistoryList подготавливает список истории ремонта для отображения,
+    // заменяя идентификаторы пользователя и велосипеда на их соответствующие имена и номера.
     private void prepareHistoryList(List<History> historyList){
         historyList.forEach(s -> {
             try{

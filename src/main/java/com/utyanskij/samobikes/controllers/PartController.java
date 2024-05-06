@@ -19,6 +19,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+
+//Этот контроллер управляет операциями с запчастями
 @Controller
 @RequestMapping("/parts")
 public class PartController {
@@ -50,6 +52,8 @@ public class PartController {
         this.historyService = historyService;
     }
 
+
+    //Этот метод showEditPartForm предназначен для отображения формы редактирования запчастей велосипеда.
     @GetMapping("/edit/{id_bike}")
     public String showEditPartForm(Model model, @PathVariable(value = "id_bike") Integer id,
                                    @Param("currentPage") String currentPage,
@@ -123,6 +127,9 @@ public class PartController {
         return "redirect:/bikes/show/" + partListDTO.getParams();
     }
 
+
+    //Этот метод setAllImpTrue устанавливает статус всех запчастей с
+    //важностью менее 3 в качестве "работает" и сохраняет изменения.
     @GetMapping("/fine/{id_bike}")
     public String setAllImpTrue(Model model, @PathVariable(value = "id_bike")Integer id,
                                 @AuthenticationPrincipal SamUserDetails loggedUser,
@@ -165,6 +172,8 @@ public class PartController {
         return StringUtil.createBikePageRedirectLink(bike.getId(), currentPage, sortField, sortDir, commentSortDir, keyword);
     }
 
+
+    //Этот метод setAllTrue устанавливает статус "работает" для всех запчастей велосипеда и сохраняет изменения.
     @GetMapping("/fineAll/{id_bike}")
     public String setAllTrue(Model model, @PathVariable(value = "id_bike")Integer id,
                              @AuthenticationPrincipal SamUserDetails loggedUser,
