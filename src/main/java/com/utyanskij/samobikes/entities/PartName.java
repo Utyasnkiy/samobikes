@@ -2,6 +2,8 @@ package com.utyanskij.samobikes.entities;
 
 import javax.persistence.*;
 
+
+//представляющая названия запчастей
 @Entity
 @Table(name = "part_names")
 public class PartName {

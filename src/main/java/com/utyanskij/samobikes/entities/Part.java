@@ -2,6 +2,8 @@ package com.utyanskij.samobikes.entities;
 
 import javax.persistence.*;
 
+
+//Part - это сущность (Entity) в приложении, представляющая отдельные запчасти для велосипедов.
 @Entity
 @Table(name = "parts")
 public class Part {

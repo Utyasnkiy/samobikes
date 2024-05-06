@@ -4,6 +4,9 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 
+
+//сущность (Entity) в приложении для управления информацией о велосипедах.
+// В этом классе определены поля и методы для хранения и обработки данных о велосипедах.
 @Entity
 @Table(name = "bikes")
 public class Bike {

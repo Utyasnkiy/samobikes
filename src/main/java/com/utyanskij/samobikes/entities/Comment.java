@@ -3,6 +3,8 @@ package com.utyanskij.samobikes.entities;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+
+//это сущность (Entity) в приложении для хранения информации о комментариях к велосипедам.
 @Entity
 @Table(name = "comments")
 public class Comment {

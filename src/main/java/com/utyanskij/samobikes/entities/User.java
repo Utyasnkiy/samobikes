@@ -3,6 +3,10 @@ package com.utyanskij.samobikes.entities;
 import javax.persistence.*;
 import java.util.Collection;
 
+
+//сущность, представляющая пользователя в приложении. Здесь содержится информация о пользователе,
+// такая как его идентификатор, имя пользователя, пароль, имя,
+// фамилия, статус активности, а также роли, присвоенные пользователю.
 @Entity
 @Table(name = "users")
 public class User {

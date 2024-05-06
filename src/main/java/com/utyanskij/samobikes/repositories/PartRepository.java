@@ -8,6 +8,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+
+//это интерфейс репозитория, который обеспечивает доступ к данным о деталях в базе данных.
 @Repository
 public interface PartRepository extends JpaRepository<Part, Integer> {
     @Modifying

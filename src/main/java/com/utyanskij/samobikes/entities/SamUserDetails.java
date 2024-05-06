@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+
+//Этот класс представляет информацию о пользователе,
+//необходимую для аутентификации и авторизации в приложении.
 public class SamUserDetails implements UserDetails {
 
     private User user;

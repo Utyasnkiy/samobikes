@@ -2,6 +2,8 @@ package com.utyanskij.samobikes.entities;
 
 import javax.persistence.*;
 
+
+//Role - это сущность (Entity) в приложении, представляющая роли пользователей.
 @Entity
 @Table(name = "roles")
 public class Role {

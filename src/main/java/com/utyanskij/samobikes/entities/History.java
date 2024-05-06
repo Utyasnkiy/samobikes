@@ -3,6 +3,8 @@ package com.utyanskij.samobikes.entities;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+
+//сущность (Entity) в приложении для хранения информации о истории ремонта велосипедов.
 @Entity
 @Table(name = "repair_history")
 public class History {
