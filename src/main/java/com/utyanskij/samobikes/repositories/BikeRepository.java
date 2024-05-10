@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BikeRepository extends PagingAndSortingRepository<Bike, Integer> {
     int countByStatus (boolean status);
+    int countByworkstatus (boolean workstastus);
     Bike findByNumber(Integer number);
     Bike findByqrNumber(Integer qrNumber);
     Bike findByVIN(String VIN);

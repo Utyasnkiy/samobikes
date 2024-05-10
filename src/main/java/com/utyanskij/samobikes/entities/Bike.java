@@ -33,6 +33,9 @@ public class Bike {
     @Column(name = "status")
     private boolean status;
 
+    @Column(name = "workstatus")
+    private boolean workstatus;
+
     @Column(name = "description")
     private String description;
 
@@ -46,7 +49,7 @@ public class Bike {
     public Bike() {
     }
 
-    public Bike(Integer id, List<Part> parts, Integer number, Integer qrNumber, String VIN, boolean status, String description) {
+    public Bike(Integer id, List<Part> parts, Integer number, Integer qrNumber, String VIN, boolean status,boolean workstatus,String description) {
         this.id = id;
         this.parts = parts;
         this.number = number;
@@ -54,10 +57,11 @@ public class Bike {
         this.VIN = VIN;
         this.status = status;
         this.description = description;
+        this.workstatus = workstatus;
     }
 
     public Bike(Integer id, List<Part> parts, Integer number, Integer qrNumber, String VIN,
-                boolean status, String description, String qrLink, String photo) {
+                boolean status,boolean workstatus, String description, String qrLink, String photo) {
         this.id = id;
         this.parts = parts;
         this.number = number;
@@ -67,6 +71,7 @@ public class Bike {
         this.description = description;
         this.qrLink = qrLink;
         this.photo = photo;
+        this.workstatus = workstatus;
     }
 
     //getters, setters
@@ -113,9 +118,14 @@ public class Bike {
     public boolean isStatus() {
         return status;
     }
-
     public void setStatus(boolean status) {
         this.status = status;
+    }
+    public boolean isWorkstatus() {
+        return workstatus;
+    }
+    public void setWorkstatus(boolean workstatus) {
+        this.status = workstatus;
     }
 
     public String getDescription() {

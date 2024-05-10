@@ -28,7 +28,8 @@
         <span th:text="${'Номер: ' + bike.number}"/><br>
         <span th:text="${'QR Номер: ' + bike.qrNumber}"/><br>
         <span th:text="${'VIN: ' + bike.VIN}"/><br>
-        <span th:text="${bike.status == true ? 'Работает' : 'Сломан'}"/><br>
+        <span th:text="${bike.status == true ? 'Готов к работе' : 'Сломан'}"/><br>
+        <span th:text="${bike.workstatus == true ? 'Свободен' : 'Занят'}"/><br>
         <span th:text="${'Описание: ' + bike.description}"/><br>
         <div class="divAdminButton">
             <div class="divAdminButtonOne">

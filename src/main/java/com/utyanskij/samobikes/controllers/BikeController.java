@@ -84,6 +84,8 @@ public class BikeController {
         model.addAttribute("count_all_bikes", bikeService.countAll());
         model.addAttribute("count_working_bikes", bikeService.countWorkingBikes());
         model.addAttribute("count_broken_bikes", bikeService.countBrokenBikes());
+        model.addAttribute("count_work_bikes", bikeService.countworkbikes());
+        model.addAttribute("count_notwork_bikes", bikeService.countnotworkbikes());
 
         long startCount = (long) (pageNum - 1) * BikeService.BIKES_PER_PAGE + 1;
         long endCount = startCount + BikeService.BIKES_PER_PAGE - 1;

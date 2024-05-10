@@ -20,7 +20,9 @@
         <div class="firstHead">
             <span th:text="${'Всего: ' + count_all_bikes}"/><br>
             <span th:text="${'Cломано: ' + count_broken_bikes}"/><br>
-            <span th:text="${'Работают: ' + count_working_bikes}"/>
+            <span th:text="${'Готово к работе: ' + count_working_bikes}"/><br>
+            <span th:text="${'Свободно: ' + count_work_bikes}"/><br>
+            <span th:text="${'Занято: ' + count_notwork_bikes}"/>
         </div><div class="midleHead">
             <H1>Каталог велосипедов</H1>
         </div><div sec:authorize="isAuthenticated()" class="lastHead">
@@ -76,6 +78,8 @@
             <th th:replace="fragments :: columnLink('bikes', 'qrNumber', 'QR номер')"/>
             <th th:replace="fragments :: columnLink('bikes', 'status', 'Статус')"/>
             <th><i class="iCom fa-solid fa-message"></i></th>
+            <th th:replace="fragments :: columnLink('bikes', 'workstatus', 'Занятость')"/>
+            <th th:replace="fragments :: columnLink('bikes', '', '')"/>
             <th class="textCenter"></th>
         </tr>
         </thead>
@@ -85,8 +89,11 @@
             th:attr="onclick=|rowClicked('${bike.id}', '${currentPage}', '${sortField}', '${sortDir}', '${keyword != null ? '&keyword=' + keyword : ''}') |">
             <td th:text="${bike.number}"/>
             <td th:text="${bike.qrNumber}"/>
-            <td th:text="${bike.status == true ? 'Работает' : 'Сломан'}"/>
+            <td th:text="${bike.status == true ? 'Готов к работе' : 'Сломан'}"/>
             <td th:text="${bike.comments.size}"/>
+
+            <td th:text="${bike.workstatus == true ? 'Свободен' : 'Занят'}"/>
+
             <td class="textCenter">
                 <a class="fa-solid fa-list aTab"
                    th:href="@{'/bikes/show/' + ${bike.id} + '?currentPage=' + ${currentPage} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + '&commentSortField=commentedAt&commentSortDir=asc' + ${keyword != null ? '&keyword=' + keyword : ''}}">

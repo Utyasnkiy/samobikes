@@ -74,11 +74,17 @@
             <div class="input-group select">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                 <select th:field="*{status}" required>
-                    <option selected value="true">Работает</option>
+                    <option selected value="true">Готов к работе</option>
                     <option value="false">Сломан</option>
                 </select>
             </div>
-
+            <div class="input-group select">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                <select th:field="*{workstatus}" required>
+                    <option selected value="true">Свободен</option>
+                    <option value="false">Занят</option>
+                </select>
+            </div>
             <div class="input-group">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                 <input th:field="*{description}" placeholder="Описание вело" class="form-control"/>

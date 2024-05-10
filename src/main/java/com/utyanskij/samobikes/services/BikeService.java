@@ -73,6 +73,12 @@ public class BikeService {
         return bikeRepository.countByStatus(false);
     }
 
+    public int countworkbikes(){
+        return bikeRepository.countByworkstatus(true);
+    }
+    public int countnotworkbikes(){
+        return bikeRepository.countByworkstatus(false);
+    }
 
     //получает велосипед по его идентификатору.
     public Bike getById(Integer id){
