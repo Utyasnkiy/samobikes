@@ -125,7 +125,7 @@ public class Bike {
         return workstatus;
     }
     public void setWorkstatus(boolean workstatus) {
-        this.status = workstatus;
+        this.workstatus = workstatus;
     }
 
     public String getDescription() {

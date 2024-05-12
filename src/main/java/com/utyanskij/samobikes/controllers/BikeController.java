@@ -46,7 +46,7 @@ public class BikeController {
     }
 
     @Autowired
-    public void setCommentService(CommentService commentService){
+    public void setCommentService(CommentService commentService) {
         this.commentService = commentService;
     }
 
@@ -61,7 +61,7 @@ public class BikeController {
     }
 
     @GetMapping
-    public String showBikes(Model model){
+    public String showBikes(Model model) {
         return showBikesByPage(model, 1, "number", "asc", null);
     }
 
@@ -73,7 +73,7 @@ public class BikeController {
                                   @PathVariable(name = "pageNum") int pageNum,
                                   @Param("sortField") String sortField,
                                   @Param("sortDir") String sortDir,
-                                  @Param("keyword") String keyword){
+                                  @Param("keyword") String keyword) {
         Bike bike = new Bike();
         model.addAttribute("bike", bike);
 
@@ -89,7 +89,7 @@ public class BikeController {
 
         long startCount = (long) (pageNum - 1) * BikeService.BIKES_PER_PAGE + 1;
         long endCount = startCount + BikeService.BIKES_PER_PAGE - 1;
-        if (endCount > page.getTotalElements()){
+        if (endCount > page.getTotalElements()) {
             endCount = page.getTotalElements();
         }
         model.addAttribute("totalPages", page.getTotalPages());
@@ -117,7 +117,7 @@ public class BikeController {
                               @Param("sortDir") String sortDir,
                               @Param("commentSortField") String commentSortField,
                               @Param("commentSortDir") String commentSortDir,
-                              @Param("keyword") String keyword){
+                              @Param("keyword") String keyword) {
         Bike bike = bikeService.getById(id);
         bike.checkWorks();
         bikeService.save(bike);
@@ -146,14 +146,14 @@ public class BikeController {
     }
 
     @GetMapping("/management/add")
-    public String showAddBikeForm(Model model){
+    public String showAddBikeForm(Model model) {
         Bike bike = new Bike();
         model.addAttribute("bike", bike);
         return "bike-edit";
     }
 
     @GetMapping("/management/edit/{id}")
-    public String showEditBikeForm(Model model, @PathVariable(value = "id") Integer id){
+    public String showEditBikeForm(Model model, @PathVariable(value = "id") Integer id) {
         Bike bike = bikeService.getById(id);
         model.addAttribute("bike", bike);
         return "bike-edit";
@@ -162,21 +162,21 @@ public class BikeController {
 
     // Логика сохранения велосипеда и обработки изображения
     @PostMapping("/management/edit")
-    public String saveBike (Model model,
-                            @AuthenticationPrincipal SamUserDetails loggedUser,
-                            @ModelAttribute(value = "bike") Bike bike,
-                            RedirectAttributes redirectAttributes,
-                            @RequestParam("image")MultipartFile multipartFile) throws IOException {
+    public String saveBike(Model model,
+                           @AuthenticationPrincipal SamUserDetails loggedUser,
+                           @ModelAttribute(value = "bike") Bike bike,
+                           RedirectAttributes redirectAttributes,
+                           @RequestParam("image") MultipartFile multipartFile) throws IOException {
         List<String> errors = new ArrayList<>();
         checkDuplicate(bike, errors);
-        if (!errors.isEmpty()){
+        if (!errors.isEmpty()) {
             model.addAttribute("bike", bike);
             model.addAttribute("errors", errors);
 
             return "bike-edit";
         }
 
-        if (!multipartFile.isEmpty()){
+        if (!multipartFile.isEmpty()) {
             String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 
             bike.setPhoto(fileName);
@@ -215,7 +215,7 @@ public class BikeController {
     @GetMapping("/management/delete/{id}")
     public String deleteBike(@PathVariable(value = "id") Integer id,
                              @AuthenticationPrincipal SamUserDetails loggedUser,
-                             RedirectAttributes redirectAttributes){
+                             RedirectAttributes redirectAttributes) {
         Bike bike = bikeService.getById(id);
 
         String message = StringUtil.makeHistoryType(bike, " удалён");
@@ -248,7 +248,7 @@ public class BikeController {
 
 
     //Метод для разделения списка деталей на две подсписки, которые будут отображаться на странице интерфейса.
-    private List<Part> makeSubList(boolean left, List<Part> parts){
+    private List<Part> makeSubList(boolean left, List<Part> parts) {
         int temp = 0;
 
         if (parts.size() % 2 != 0) temp = 1;
@@ -259,4 +259,47 @@ public class BikeController {
             return parts.subList(parts.size() / 2 + temp, parts.size());
 
     }
+
+    @GetMapping("/setWorkStatusTrue/{id}")
+    public String setWorkstatustrue(@PathVariable(value = "id") Integer id,
+                                    @AuthenticationPrincipal SamUserDetails loggedUser,
+                                    RedirectAttributes redirectAttributes) {
+
+        Bike bike = bikeService.getById(id);
+        // Устанавливаем workstatus в true
+        bike.setWorkstatus(true);
+        // Сохраняем изменения в базе данных
+        bikeService.save(bike);
+
+        return "redirect:/bikes";
+    }
+
+    @GetMapping("/setWorkStatusFalse/{id}")
+    public String setWorkstatusFalse(@PathVariable(value = "id") Integer id,
+                                    @AuthenticationPrincipal SamUserDetails loggedUser,
+                                    RedirectAttributes redirectAttributes) {
+
+        Bike bike = bikeService.getById(id);
+        // Устанавливаем workstatus в true
+        bike.setWorkstatus(false);
+        // Сохраняем изменения в базе данных
+        bikeService.save(bike);
+
+        return "redirect:/bikes";
+    }
+
+
+    @GetMapping("/SetAllBikesFree/")
+    public String setAllWorkstatustrue(@AuthenticationPrincipal SamUserDetails loggedUser) {
+        Iterable<Bike> Allbikes = bikeService.getAllBikes();
+        Allbikes.forEach(bike -> {
+            bike.setWorkstatus(true);
+            bikeService.save(bike); // Сохраняем изменения в базе данных
+        });
+
+
+        return "redirect:/bikes";
+    }
+
+
 }

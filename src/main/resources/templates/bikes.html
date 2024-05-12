@@ -129,8 +129,14 @@
             </ul>
         </nav>
     <br>
+    <div>
+        <a sec:authorize="hasAnyRole('MANAGER', 'ADMIN')"
+           th:href="@{'/bikes/SetAllBikesFree/' }"
+           th:text="'Все велосипеды свободны'" class="adminButton"/>
+    </div>
     <div sec:authorize="hasAnyRole('MANAGER', 'ADMIN')" class="divBtn">
-        <a th:href="@{'/bikes/management/add/'}" th:text="Добавить" class="aAdd" />
+        <a th:href="@{'/bikes/management/add/'}"
+           th:text="Добавить" class="aAdd" />
     </div>
     <br>
     <div th:unless="${totalItems > 0}">
